@@ -117,6 +117,9 @@
                 </div>
                 <input type="submit" value="Register" class="btn btn-primary">
                 </form>
+                <p>
+                  Not register yet <a href="login.php">Login Now</a>
+                </p>
             </div>
           </div>
       </div>

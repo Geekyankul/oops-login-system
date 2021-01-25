@@ -1,10 +1,12 @@
 <?php
 
-session_start();
+    include "config.php";
+    session_start();
 
-$_SESSION= array();
+    session_unset();
 
-session_destroy();
+    session_destroy();
 
-header("location: index.php");
-exit;
+    header("location: register.php");
+
+?>

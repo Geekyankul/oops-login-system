@@ -9,6 +9,26 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 }
 ?>
 
+<?php
+ include "config/config.php";
+ if(isset($_POST['submit'])){
+  $title =  mysqli_real_escape_string($link, trim($_POST['title']));
+  $name = mysqli_real_escape_string($link, trim($_POST['name']));
+  $salary = mysqli_real_escape_string($link, trim($_POST['salary']));
+
+ // $conn = mysqli_connect("localhost", "root","", "loginsystem") or die("Error". mysqli_connect_error());
+   $q ="INSERT INTO data( `title`, `name`, `salary`) VALUES ('$title', '$name', '$salary')";
+   if(mysqli_query($link, $q)){
+    echo "Your Contact is added";
+  }else{
+    echo "Error".mysqli_error($link);
+}
+}
+
+
+?>
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -41,11 +61,65 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     
     </ul>
   </div>
+  <div>
+     <a href="logout.php" class="logout">Logout</a>
+    </div>
 </nav> 
       </header>
-      <div class="jumbotron text-center">
+      <div class="jumbotron display-2 text-center">
         <h1><?php echo $_SESSION["username"]; ?></h1>
       </div>
+
+    <div class="container"> 
+      <div class="row">
+        <div class="col-md-6">
+         <form style="width:300px" action="" method="post">
+         <div class="form-group">
+            <input type="text" name="title" placeholder="Title" class="form-control"><br/>
+            <input type="text" name="name" placeholder="Name" class="form-control"><br/>
+            <input type="text" name="salary" placeholder="Salary" class="form-control"><br/>
+            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+         </div>
+         
+         </form>
+        
+        
+        
+        </div>
+        <div class="col-md-6">
+        <table class="table">
+          <tr>
+            <th>S.No</th>
+            <th>Title</th>
+            <th>Name</th>
+            <th>Salary</th>
+          </tr>
+        <?php
+         
+          $q = "SELECT * FROM data";
+          $qry = mysqli_query($link, $q);
+          $num = mysqli_num_rows($qry);
+          while($result = mysqli_fetch_array($qry)){
+
+        ?>
+        
+        <tr>
+            <td><?php echo $result['id']; ?></td>
+            <td><?php echo $result['title']; ?></td>
+            <td><?php echo $result['name']; ?></td>
+            <td><?php echo $result['salary']; ?></td>
+        </tr>
+        <?php
+       } 
+       ?>
+        </table>
+        
+        </div>
+      </div>
+    </div>  
+
+      
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

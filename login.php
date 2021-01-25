@@ -3,7 +3,7 @@
 session_start();
 
 // Check if the user is logged in, if not then redirect him to login page
-if(isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] ===true){
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
   header("location: dashboard.php");
   exit;
 }
@@ -98,11 +98,14 @@ if($_SERVER['REQUEST_METHOD']== "POST"){
                 <span class="text-danger"><?php echo $username_err; ?></span>
                 </div>
                 <div class="form-group">
-                <input type="text" name="password" id="password" placeholder="Password" class="form-control <?php echo (!empty($password_err)) ? 'border border-danger' : ''; ?>">
+                <input type="password" name="password" id="password" placeholder="Password" class="form-control <?php echo (!empty($password_err)) ? 'border border-danger' : ''; ?>">
                 <span class="text-danger"><?php echo $password_err; ?></span>
                 </div>
                 <input type="submit" value="Login" class="btn btn-primary">
                 </form>
+                <p>
+                  Not register yet <a href="register.php">Register Now</a>
+                </p>
             </div>
           </div>
       </div>
